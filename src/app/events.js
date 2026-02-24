@@ -32,4 +32,26 @@ export function bindEvents() {
 
     form.reset();
   });
+
+  document.querySelectorAll(".delete-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = Number(btn.dataset.id);
+
+      setState((prev) => ({
+        ...prev,
+        transactions: prev.transactions.filter((t) => t.id !== id),
+      }));
+    });
+  });
+
+  document.querySelectorAll(".filter-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const filter = btn.dataset.filter;
+
+      setState((prev) => ({
+        ...prev,
+        filter,
+      }));
+    });
+  });
 }

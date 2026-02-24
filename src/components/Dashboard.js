@@ -1,4 +1,6 @@
 import { TransactionForm } from "./TransactionForm.js";
+import { TransactionList } from "./TransactionList.js";
+import { TransactionFilter } from "./TransactionFilter.js";
 
 export function Dashboard(state) {
   const totalIncome = state.transactions
@@ -11,6 +13,13 @@ export function Dashboard(state) {
 
   const balance = totalIncome - totalExpense;
 
+  let filteredTransactions = state.transactions;
+
+  if (state.filter !== "all") {
+    filteredTransactions = state.transactions.filter(
+      (t) => t.type === state.filter,
+    );
+  }
   return `
     <section class="space-y-6">
       <div class="bg-white p-6 rounded-xl shadow-sm space-y-2">
@@ -27,12 +36,8 @@ export function Dashboard(state) {
         <hr class="my-5 border-slate-500">
         ${TransactionForm()}
       </div>
-
-      <div class="bg-white p-6 rounded-xl shadow-sm">
-        <p class="text-sm text-slate-500">
-          Belum ada transaksi.
-        </p>
-      </div>
+      ${TransactionFilter(state.filter)}
+      ${TransactionList(filteredTransactions)}
     </section>
   `;
 }
