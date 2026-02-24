@@ -1,3 +1,5 @@
+import { TransactionForm } from "./TransactionForm.js";
+
 export function Dashboard(state) {
   const totalIncome = state.transactions
     .filter((t) => t.type === "income")
@@ -22,6 +24,8 @@ export function Dashboard(state) {
         <div class="text-sm font-semibold">
           Balance: ${balance}
         </div>
+        <hr class="my-5 border-slate-500">
+        ${TransactionForm()}
       </div>
 
       <div class="bg-white p-6 rounded-xl shadow-sm">
