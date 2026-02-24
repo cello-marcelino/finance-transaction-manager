@@ -1,3 +1,5 @@
+import { formatRupiah } from "../utils/currency.js";
+
 export function TransactionItem(transaction) {
   return `
     <div class="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm">
@@ -12,7 +14,8 @@ export function TransactionItem(transaction) {
         <span class="text-sm font-semibold ${
           transaction.type === "income" ? "text-green-600" : "text-red-600"
         }">
-          ${transaction.type === "income" ? "+" : "-"}${transaction.amount}
+          ${transaction.type === "income" ? "+" : "-"}
+          ${formatRupiah(transaction.amount)} 
         </span>
 
         <button 

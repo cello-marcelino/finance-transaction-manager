@@ -1,3 +1,5 @@
+import { saveTransactions } from "../services/persistence.js";
+
 let state = {
   transactions: [],
   filter: "all", // all | income | expense
@@ -18,6 +20,10 @@ export function setState(updater) {
   }
 
   state = newState;
+
+  // Persist hanya transaksi
+  saveTransactions(state.transactions);
+
   notify();
 }
 
