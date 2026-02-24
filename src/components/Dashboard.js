@@ -1,17 +1,12 @@
+import { calculateSummary } from "../utils/aggregation.js";
 import { TransactionForm } from "./TransactionForm.js";
 import { TransactionList } from "./TransactionList.js";
 import { TransactionFilter } from "./TransactionFilter.js";
 
 export function Dashboard(state) {
-  const totalIncome = state.transactions
-    .filter((t) => t.type === "income")
-    .reduce((sum, t) => sum + t.amount, 0);
-
-  const totalExpense = state.transactions
-    .filter((t) => t.type === "expense")
-    .reduce((sum, t) => sum + t.amount, 0);
-
-  const balance = totalIncome - totalExpense;
+  const { totalIncome, totalExpense, balance } = calculateSummary(
+    state.transactions,
+  );
 
   let filteredTransactions = state.transactions;
 
@@ -22,22 +17,35 @@ export function Dashboard(state) {
   }
   return `
     <section class="space-y-6">
-      <div class="bg-white p-6 rounded-xl shadow-sm space-y-2">
-        <h2 class="text-lg font-medium">Summary</h2>
-        <div class="text-sm text-slate-600">
-          Income: ${totalIncome}
+      <div class="bg-white p-6 rounded-xl shadow-sm">
+        <div class="grid grid-cols-2 gap-6 items-center">
+
+          <div>
+            <canvas id="summary-chart"></canvas>
+          </div>
+
+          <div class="space-y-2">
+            <h2 class="text-lg font-medium">Summary</h2>
+
+            <div class="text-sm text-green-600">
+              Income: ${totalIncome}
+            </div>
+
+            <div class="text-sm text-red-600">
+              Expense: ${totalExpense}
+            </div>
+
+            <div class="text-sm font-semibold">
+              Balance: ${balance}
+            </div>
+          </div>
+
         </div>
-        <div class="text-sm text-slate-600">
-          Expense: ${totalExpense}
-        </div>
-        <div class="text-sm font-semibold">
-          Balance: ${balance}
-        </div>
-        <hr class="my-5 border-slate-500">
         ${TransactionForm()}
       </div>
       ${TransactionFilter(state.filter)}
       ${TransactionList(filteredTransactions)}
+
     </section>
   `;
 }
