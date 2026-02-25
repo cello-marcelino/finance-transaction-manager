@@ -19,14 +19,11 @@ export function Dashboard(state) {
   return `
     <section class="space-y-6">
       <div class="bg-white p-6 rounded-xl shadow-sm">
-        <div class="grid grid-cols-2 gap-6 items-center">
-          <div class="size-60">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-evenly space-y-7">
+          <div class="size-60 md:size-60 w-full flex justify-center">
             <canvas id="summary-chart"></canvas>
           </div>
-
           <div class="space-y-2">
-            <h2 class="text-3xl font-medium">Summary</h2>
-
             <div class="text-lg text-green-600">
               Income: ${formatRupiah(totalIncome)}
             </div>
